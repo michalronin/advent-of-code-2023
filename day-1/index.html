@@ -6,25 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parse Text File</title>
     <script type="module">
-        import { parseTextFile, firstAndLastNumbers } from './day-1.js';
+        import { parseTextFile, extractNumbers } from './day-1.js';
 
         // Example usage
         async function processFile(filePath) {
           try {
             const parsedArray = await parseTextFile(filePath);
-            const processedArray = firstAndLastNumbers(parsedArray);
+            const extractedNumbers = parsedArray.map(extractNumbers).filter(num => num !== null);
 
-            const sum = processedArray.reduce((accumulator, currentValue) => {
-              return accumulator + (+currentValue);
-            }, 0);
-          console.log(sum);
+            const sum = extractedNumbers.reduce((acc, curr) => acc + Number(curr), 0);
+            return sum;
           } catch (error) {
             console.error('Error processing file: ', error);
           }
         }
 
         document.addEventListener('DOMContentLoaded', (event) => {
-          processFile('input.txt');
+          processFile('input.txt').then(sum => console.log('Sum: ', sum));
         });
     </script>
 </head>
